@@ -326,7 +326,7 @@ struct SafeArray
     operator T*() { return impl; }
 
     template<typename U>
-    explicit operator U() { return (U)impl; }
+    operator U() { return (U)impl; }
 
 private:
     T* impl;
