@@ -1035,12 +1035,11 @@ osg::Image* ReadDDSFile(std::istream& _istream, bool flipDDSRead)
     {
         // Now we need to substitute the indexed image data with full RGBA image data.
         unsigned char* convertedData = new unsigned char [sizeWithMipmaps * 4];
+        unsigned char* pixel = convertedData;
         for (unsigned int i = 0; i < sizeWithMipmaps; i++)
         {
-            convertedData[i * 4 + 0] = palette[imageData[i] * 4 + 0];
-            convertedData[i * 4 + 1] = palette[imageData[i] * 4 + 1];
-            convertedData[i * 4 + 2] = palette[imageData[i] * 4 + 2];
-            convertedData[i * 4 + 3] = palette[imageData[i] * 4 + 3];
+            memcpy(pixel, &palette[imageData[i] * 4], sizeof(unsigned char) * 4);
+            pixel += 4;
         }
         delete [] imageData;
         for (unsigned int i = 0; i < mipmap_offsets.size(); i++)
